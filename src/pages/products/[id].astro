@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const products = await fetch('https://fakestoreapi.com/products').then((response) => response.json());
+
+  return products.map((product) => ({
+    params: {
+      id: String(product.id),
+    },
+
+    props: { product },
+  }));
+}
+
+// const { id } = Astro.request.params;
+const { product } = Astro.props;
+---
+
+<BaseLayout title={product.title}>
+  <div class="row">
+    <div class="col-12 col-md-8">
+
+      <section class="card mb-4">
+        <header class="card-header">
+          <h3 class="card-title">{ product.title }</h3>
+        </header>
+
+        <main class="card-body">
+          <p>{ product.description }</p>
+          <p>{ product.category }</p>
+          <p>{ product.price }</p>
+        </main>
+      </section>
+
+    </div>
+
+    <div class="col-md-4">
+
+      <section class="card">
+        <header class="card-header">
+          <h3 class="card-title">Image</h3>
+        </header>
+
+        <main class="card-body">
+          <a href={product.image} target="_blank">
+            <img class="d-block w-100" src={product.image} />
+          </a>
+        </main>
+      </section>
+
+    </div>
+  </div>
+</BaseLayout>

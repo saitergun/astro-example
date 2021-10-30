@@ -1,0 +1,83 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Contact">
+  <h1>this is pages/contact.astro</h1>
+
+  <form
+    class="mt-4"
+    id="contact-form"
+  >
+    <div class="mb-3">
+      <label
+        type="email"
+        class="form-label"
+        for="contact-form-email-input"
+      >Email address</label>
+
+      <input
+        class="form-control"
+        id="contact-form-email-input"
+        required
+      />
+    </div>
+
+    <div class="mb-3">
+      <label
+        class="form-label"
+        for="contact-form-message-textarea"
+      >Message</label>
+
+      <textarea
+        class="form-control"
+        id="contact-form-message-textarea"
+        rows="3"
+        required
+      ></textarea>
+    </div>
+
+    <div>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        id="contact-form-submit-button"
+      >Submit</button>
+    </div>
+  </form>
+
+  <div
+    id="contact-form-alert"
+    class="d-none alert alert-success mt-4"
+  >Your message has been send.</div>
+</BaseLayout>
+
+<script hoist>
+const form = document.getElementById('contact-form');
+// const form = document.forms['contact-form'];
+const email = document.getElementById('contact-form-email-input');
+const message = document.getElementById('contact-form-message-textarea');
+const submitButton = document.getElementById('contact-form-submit-button');
+
+const alert = document.getElementById('contact-form-alert');
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  submitButton.innerText = 'Submitting';
+  submitButton.disabled = true;
+  email.disabled = true;
+  message.disabled = true;
+
+  setTimeout(() => {
+    form.reset();
+
+    submitButton.innerText = 'Submit';
+    submitButton.disabled = false;
+    email.disabled = false;
+    message.disabled = false;
+
+    alert.classList.remove('d-none');
+  }, 1000);
+})
+</script>
